@@ -5,16 +5,15 @@ import { lignes, stations } from "../Data";
 import { MapView, Heading, Divider, Text } from "@aws-amplify/ui-react";
 import { Marker, Popup, Source, Layer } from "react-map-gl";
 import { Amplify } from "aws-amplify";
+import { fetchAuthSession } from "aws-amplify/auth";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "../aws-exports";
 import config from "../aws-exports";
 import { getDatabase, ref, onValue, get, child } from "firebase/database";
-import { Auth } from "aws-amplify";
 import {
   LocationClient,
   CalculateRouteCommand,
 } from "@aws-sdk/client-location";
-import { createRequestTransformer } from "amazon-location-helpers";
 
 Amplify.configure(awsExports);
 const ROUTE_CALC_NAME = "wherebus-calculator";
@@ -118,13 +117,15 @@ export default function Service() {
 
   useEffect(() => {
     const fetchCredentials = async () => {
-      setCredentials(await Auth.currentUserCredentials());
+      const session = await fetchAuthSession();
+      setCredentials(session.credentials);
     };
 
     fetchCredentials();
 
     const createClient = async () => {
-      const credentials = await Auth.currentCredentials();
+      const session = await fetchAuthSession();
+      const credentials = session.credentials;
       const client = new LocationClient({
         credentials,
         region: config.aws_project_region,
