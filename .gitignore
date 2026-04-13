@@ -32,7 +32,7 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-aws-exports.js
+# aws-exports.js is committed to the repo and uses REACT_APP_* env vars
 awsconfiguration.json
 amplifyconfiguration.json
 amplifyconfiguration.dart
