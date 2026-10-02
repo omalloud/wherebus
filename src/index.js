@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router} from 'react-router-dom';
 import { createRoot } from "react-dom/client";
 import { Amplify } from "aws-amplify";
-import { AmplifyProvider } from "@aws-amplify/ui-react";
+import { ThemeProvider } from "@aws-amplify/ui-react";
 import config from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import "./index.css";
@@ -26,9 +26,9 @@ Amplify.configure(config);
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
-  <AmplifyProvider>
+  <ThemeProvider>
     <Router>
       <App />
     </Router>
-  </AmplifyProvider>
+  </ThemeProvider>
 );
